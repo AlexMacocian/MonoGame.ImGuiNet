@@ -7,6 +7,7 @@ on:
     paths:
       - MonoGame.ImGuiNet/**
       - ".github/workflows/cd.yaml"
+  workflow_dispatch:
 
 jobs:
   build:
