@@ -20,7 +20,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackageId>MonoGame.ImGuiNet</PackageId>
+        <PackageId>AlexMacocian.MonoGame.ImGuiNet</PackageId>
 
         <PackageIcon>NugetpkgIcon.png</PackageIcon>
         <PackageTags>
