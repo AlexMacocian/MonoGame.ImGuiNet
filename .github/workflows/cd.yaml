@@ -1,0 +1,51 @@
+name: MonoGame.ImGuiNet CD Pipeline
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - MonoGame.ImGuiNet/**
+      - ".github/workflows/cd.yaml"
+
+jobs:
+  build:
+    environment: Default
+    strategy:
+      matrix:
+        targetplatform: [x64]
+    runs-on: windows-latest
+
+    env:
+      Configuration: Release
+      Solution_Path: MonoGame.ImGuiNet.sln
+      Source_Project_Path: MonoGame.ImGuiNet\MonoGame.ImGuiNet.csproj
+      Actions_Allow_Unsecure_Commands: true
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v2.0.0
+
+    - name: Restore project
+      run: msbuild $env:Solution_Path /t:Restore /p:Configuration=$env:Configuration /p:RuntimeIdentifier=$env:RuntimeIdentifier
+      env:
+        RuntimeIdentifier: win-${{ matrix.targetplatform }}
+
+    - name: Build MonoGame.ImGuiNet project
+      run: dotnet build $env:Source_Project_Path -c $env:Configuration
+
+    - name: Package MonoGame.ImGuiNet
+      run: dotnet pack -c Release -o . $env:Source_Project_Path
+
+    - name: Publish
+      run: dotnet nuget push *.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
