@@ -21,15 +21,11 @@
 
     <PropertyGroup>
         <PackageId>AlexMacocian.MonoGame.ImGuiNet</PackageId>
-
         <PackageIcon>NugetpkgIcon.png</PackageIcon>
         <PackageTags>
             MonoGame;ImGui;import;processes;read;write;gui;
         </PackageTags>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageReleaseNotes>
-            [General fixes]
-        </PackageReleaseNotes>
+        <PackageReadmeFile>README.MD</PackageReadmeFile>
         <Description>
             A superset of ImGuiNet with additional components designed for Monogame
         </Description>
